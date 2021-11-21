@@ -3,9 +3,12 @@
 
 // PINS
 #define waterEnginePin LED_BUILTIN // pin has to support pwm
+#define moisturePin A0
 
 
-WateringSystem waterEngine (waterEnginePin);
+WateringSystem waterEngine(waterEnginePin);
+// values for mositure sensor vary. Test your sensor for the values.
+MoistureSensor moistureSensor(420, 830, 40.0, moisturePin);
 
 
 void setup() {
@@ -29,7 +32,7 @@ void loop() {
   updateOnCycle();
 
   if(waterEngine.pump()){
-    Serial.print("now pumping! Time: ");
+    Serial.print("Watering started! Time: ");
     Serial.println(millis());
   } 
 
@@ -42,4 +45,13 @@ void loop() {
 void updateOnCycle() {
   //Serial.println(millis());
   waterEngine.updateOnLoop(millis());
+}
+
+
+void printEvery10Seconds(){
+  // TODO: Dont work with exact milli values
+  if (millis() % 100000 == 0) {
+    Serial.print("Soil moisture: ");
+    Serial.println(moistureSensor.getMoistureValue());
+  }
 }
