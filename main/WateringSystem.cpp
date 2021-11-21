@@ -1,11 +1,13 @@
 #include "WateringSystem.h"
 
-/*  The wateringSystem controlles the watering pump for the plants.
-*   It handles the watering rate and duration and has built-in safety
-*   for stopping the watering in various cases.
-****************************************************************************
-*   !!! updateOnLoop() has to be called in every loop in the main file  !!!
-****************************************************************************/
+/*  
+ * The wateringSystem controlles the watering pump for the plants.
+ * It handles the watering rate and duration and has built-in safety
+ * for stopping the watering in various cases.
+ ****************************************************************************
+ *   !!! updateOnLoop() has to be called in every loop in the main file  !!!
+ ***************************************************************************
+ */
 
 
 WateringSystem::WateringSystem(int pwmPin){

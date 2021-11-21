@@ -1,15 +1,18 @@
 #include "MoistureSensor.h"
 #include "WateringSystem.h"
 
+// PINS
+#define waterEnginePin LED_BUILTIN // pin has to support pwm
 
-WateringSystem waterEngine (LED_BUILTIN);
+
+WateringSystem waterEngine (waterEnginePin);
 
 
 void setup() {
   Serial.begin(9600);
 
   // setup of sensors
-  waterEngine.setup(LED_BUILTIN);
+  waterEngine.setup(waterEnginePin);
 
   // initialize data
   waterEngine.stop();
