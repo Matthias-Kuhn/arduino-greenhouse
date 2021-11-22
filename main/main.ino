@@ -1,14 +1,18 @@
 #include "MoistureSensor.h"
 #include "WateringSystem.h"
+#include "DHT.h"
+
 
 // PINS
 #define waterEnginePin LED_BUILTIN // pin has to support pwm
 #define moisturePin A0
+#define dhtPin 22
 
 
 WateringSystem waterEngine(waterEnginePin);
 // values for mositure sensor vary. Test your sensor for the values.
 MoistureSensor moistureSensor(420, 830, 40.0, moisturePin);
+DHT dhtSensor(dhtPin, DHT22);
 
 
 void setup() {
@@ -22,6 +26,8 @@ void setup() {
   waterEngine.setWateringDuration(3850);
   waterEngine.setWateringBreakTime(30000);
   waterEngine.setWateringRate(255);
+
+  dhtSensor.begin();
 
   Serial.print("Initialized! Millis now at: ");
   Serial.println(millis());
@@ -53,5 +59,13 @@ void printEvery10Seconds(){
   if (millis() % 100000 == 0) {
     Serial.print("Soil moisture: ");
     Serial.println(moistureSensor.getMoistureValue());
+    Serial.print("Temperature: ");
+    Serial.println(dhtSensor.readTemperature());
+    Serial.print("Humidity: ");
+    Serial.println(dhtSensor.readHumidity());
+    Serial.println("");
+    Serial.print("Time until next watering: ");
+    Serial.println(waterEngine.remainingTime(millis()));
+
   }
 }
