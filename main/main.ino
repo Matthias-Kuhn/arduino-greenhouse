@@ -58,7 +58,10 @@ void printEvery10Seconds(){
   // TODO: Dont work with exact milli values
   if (millis() % 100000 == 0) {
     Serial.print("Soil moisture: ");
-    Serial.println(moistureSensor.getMoistureValue());
+    Serial.print(moistureSensor.getMoistureValue());
+    Serial.print(" (");
+    Serial.print(moistureSensor.getMoisturePercentage());
+    Serial.println("%)");
     Serial.print("Temperature: ");
     Serial.println(dhtSensor.readTemperature());
     Serial.print("Humidity: ");
