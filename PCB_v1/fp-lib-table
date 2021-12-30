@@ -1,0 +1,3 @@
+(fp_lib_table
+  (lib (name Pumpe)(type KiCad)(uri ${KIPRJMOD}/Pumpe.pretty)(options "")(descr ""))
+)

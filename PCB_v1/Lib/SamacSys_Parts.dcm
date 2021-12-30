@@ -1,0 +1,15 @@
+EESchema-DOCLIB  Version 2.0
+#
+$CMP NE555DR
+D Single Precision Timer
+K
+F http://www.ti.com/lit/ds/symlink/ne555.pdf
+$ENDCMP
+#
+$CMP TIP120
+D NPN darlington transistor,TIP120 5A
+K
+F https://www.st.com/resource/en/datasheet/cd00000911.pdf
+$ENDCMP
+#
+#End Doc Library
