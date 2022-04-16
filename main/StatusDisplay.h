@@ -25,6 +25,7 @@ class StatusDisplay {
   void showMoistureScreen(unsigned long time, float moisture);
   void updateSeconds(unsigned long time);
   void showWateringScreen();
+  unsigned long getTime(unsigned long time);
 
   const char* timeEnding = "";
   bool onUpdateLoopIsCalled = false;
@@ -33,9 +34,6 @@ class StatusDisplay {
 
   Adafruit_SSD1306* display;
   int activeDisplay;
-
-
-
 };
 
 #endif

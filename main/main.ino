@@ -11,8 +11,8 @@
 
 WateringSystem waterEngine(waterEnginePin);
 // values for mositure sensor vary. Test your sensor for the values.
-MoistureSensor moistureSensor(420, 830, 40.0, moisturePin);
-DHT dhtSensor(dhtPin, DHT22);
+// MoistureSensor moistureSensor(420, 830, 40.0, moisturePin);
+// DHT dhtSensor(dhtPin, DHT22);
 
 
 void setup() {
@@ -23,11 +23,15 @@ void setup() {
 
   // initialize data
   waterEngine.stop();
-  waterEngine.setWateringDuration(3850);
-  waterEngine.setWateringBreakTime(30000);
+  //waterEngine.setWateringDuration(3850);
+  //waterEngine.setWateringBreakTime(30000);
+
+  waterEngine.setWateringDuration(500);
+  waterEngine.setWateringBreakTime(2000);
+
   waterEngine.setWateringRate(255);
 
-  dhtSensor.begin();
+  // dhtSensor.begin();
 
   Serial.print("Initialized! Millis now at: ");
   Serial.println(millis());
@@ -57,16 +61,16 @@ void updateOnCycle() {
 void printEvery10Seconds(){
   // TODO: Dont work with exact milli values
   if (millis() % 100000 == 0) {
-    Serial.print("Soil moisture: ");
-    Serial.print(moistureSensor.getMoistureValue());
-    Serial.print(" (");
-    Serial.print(moistureSensor.getMoisturePercentage());
-    Serial.println("%)");
-    Serial.print("Temperature: ");
-    Serial.println(dhtSensor.readTemperature());
-    Serial.print("Humidity: ");
-    Serial.println(dhtSensor.readHumidity());
-    Serial.println("");
+    //Serial.print("Soil moisture: ");
+    //Serial.print(moistureSensor.getMoistureValue());
+    //Serial.print(" (");
+    //Serial.print(moistureSensor.getMoisturePercentage());
+    //Serial.println("%)");
+    //Serial.print("Temperature: ");
+    //Serial.println(dhtSensor.readTemperature());
+    //Serial.print("Humidity: ");
+    //Serial.println(dhtSensor.readHumidity());
+    //Serial.println("");
     Serial.print("Time until next watering: ");
     Serial.println(waterEngine.remainingTime(millis()));
 
