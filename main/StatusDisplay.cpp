@@ -1,6 +1,7 @@
 #include "StatusDisplay.h"
 
 StatusDisplay::StatusDisplay() {
+  
 }
 
 void StatusDisplay::updateOnLoop(unsigned long currentTime, unsigned long remainingBreak, float temperature, float humidity, float moisture, bool isWatering) {

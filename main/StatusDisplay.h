@@ -12,15 +12,15 @@
 
 
 class StatusDisplay {
-  public:
+public:
   StatusDisplay();
   void setup();
   void updateOnLoop(
-    unsigned long currentTime, unsigned long remainingBreak, 
-    float temperature, float humidity, float moisture, 
+    unsigned long currentTime, unsigned long remainingBreak,
+    float temperature, float humidity, float moisture,
     bool isWatering);
 
-  private:
+private:
   void showDHTScreen(float t, float h);
   void showMoistureScreen(unsigned long time, float moisture);
   void updateSeconds(unsigned long time);

@@ -1,6 +1,7 @@
 #include "MoistureSensor.h"
 #include "WateringSystem.h"
 #include "DHT.h"
+#include "StatusDisplay.h"
 
 
 // PINS
@@ -11,9 +12,9 @@
 
 WateringSystem waterEngine(waterEnginePin);
 // values for mositure sensor vary. Test your sensor for the values.
-// MoistureSensor moistureSensor(420, 830, 40.0, moisturePin);
-// DHT dhtSensor(dhtPin, DHT22);
-
+ MoistureSensor moistureSensor(420, 830, 40.0, moisturePin);
+ DHT dhtSensor(dhtPin, DHT22);
+ StatusDisplay statusDisplay;
 
 void setup() {
   Serial.begin(9600);
@@ -26,12 +27,13 @@ void setup() {
   //waterEngine.setWateringDuration(3850);
   //waterEngine.setWateringBreakTime(30000);
 
-  waterEngine.setWateringDuration(500);
-  waterEngine.setWateringBreakTime(2000);
+  waterEngine.setWateringDuration(5000);
+  waterEngine.setWateringBreakTime(15000);
 
   waterEngine.setWateringRate(255);
 
-  // dhtSensor.begin();
+  dhtSensor.begin();
+  statusDisplay.setup();
 
   Serial.print("Initialized! Millis now at: ");
   Serial.println(millis());
@@ -55,6 +57,7 @@ void loop() {
 void updateOnCycle() {
   //Serial.println(millis());
   waterEngine.updateOnLoop(millis());
+  statusDisplay.updateOnLoop(millis(), waterEngine.remainingTime(millis()),dhtSensor.readTemperature(), dhtSensor.readHumidity(), moistureSensor.getMoisturePercentage(), waterEngine.isCurrentlyWatering());
 }
 
 
