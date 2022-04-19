@@ -2,6 +2,8 @@
 #define WateringSystem_h
 
 #include "Arduino.h"
+// required for "const char" and "PROGMEM"
+#include <avr/pgmspace.h>
 
 /*
  * The wateringSystem controlles the watering pump for the plants.
@@ -18,6 +20,10 @@ class WateringSystem{
         void stop();
         void breakReset();
         
+        unsigned long getTime(unsigned long time);
+        const char* timeEnding = "";
+
+        void forceBreakOver();
         bool pumpDurationReached(unsigned long current_time);
         bool breakTimeExpired(unsigned long current_time);
         bool isCurrentlyWatering();

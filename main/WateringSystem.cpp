@@ -75,7 +75,29 @@ unsigned long WateringSystem::remainingTime(unsigned long current_time){
 }
 
 
+
 // getter and setter
+
+unsigned long WateringSystem::getTime(unsigned long time) {
+
+  time /= 1000;
+  if (time >= 3600) {
+    time /= 3600;
+    timeEnding = " h";
+    return time;
+
+  } else if (time >= 60) {
+    time /= 60;
+    timeEnding = " min";
+    return time;
+  }
+  timeEnding = " sec";
+  return time;
+}
+
+void WateringSystem::forceBreakOver(){
+  breakIsOver = true;
+}
 
 bool WateringSystem::isCurrentlyWatering(){
     return isWatering;

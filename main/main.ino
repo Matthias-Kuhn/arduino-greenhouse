@@ -3,6 +3,12 @@
 #include "DHT.h"
 #include "StatusDisplay.h"
 
+#include <SoftwareSerial.h>
+
+SoftwareSerial btSerial(10, 11); // RX, TX PIN
+
+String bt_rx;
+
 
 // PINS
 #define waterEnginePin LED_BUILTIN // pin has to support pwm
@@ -12,13 +18,13 @@
 
 WateringSystem waterEngine(waterEnginePin);
 // values for mositure sensor vary. Test your sensor for the values.
- MoistureSensor moistureSensor(420, 830, 40.0, moisturePin);
- DHT dhtSensor(dhtPin, DHT22);
- StatusDisplay statusDisplay;
+ //MoistureSensor moistureSensor(420, 830, 40.0, moisturePin);
+ //DHT dhtSensor(dhtPin, DHT22);
+ //StatusDisplay statusDisplay;
 
 void setup() {
   Serial.begin(9600);
-
+  btSerial.begin(9600);
   // setup of sensors
   waterEngine.setup(waterEnginePin);
 
@@ -27,13 +33,13 @@ void setup() {
   //waterEngine.setWateringDuration(3850);
   //waterEngine.setWateringBreakTime(30000);
 
-  waterEngine.setWateringDuration(5000);
-  waterEngine.setWateringBreakTime(15000);
+  waterEngine.setWateringDuration(3000);
+  waterEngine.setWateringBreakTime(86400000);
 
   waterEngine.setWateringRate(255);
 
-  dhtSensor.begin();
-  statusDisplay.setup();
+  //dhtSensor.begin();
+  //statusDisplay.setup();
 
   Serial.print("Initialized! Millis now at: ");
   Serial.println(millis());
@@ -46,7 +52,23 @@ void loop() {
   if(waterEngine.pump()){
     Serial.print("Watering started! Time: ");
     Serial.println(millis());
-  } 
+  }
+
+  if (btSerial.available()) {
+    bt_rx = btSerial.readString();
+    Serial.print("Received:");
+    Serial.println(bt_rx);
+    if (bt_rx == "how_long") {
+      btSerial.print("Start watering in ");
+      btSerial.print(waterEngine.getTime(waterEngine.remainingTime(millis())));
+      btSerial.println(waterEngine.timeEnding);
+    }
+    if (bt_rx == "water_now") {
+      btSerial.println("Ok. Watering started!");
+      waterEngine.forceBreakOver();
+      waterEngine.pump();
+    }
+  }
 
 }
 
@@ -57,7 +79,7 @@ void loop() {
 void updateOnCycle() {
   //Serial.println(millis());
   waterEngine.updateOnLoop(millis());
-  statusDisplay.updateOnLoop(millis(), waterEngine.remainingTime(millis()),dhtSensor.readTemperature(), dhtSensor.readHumidity(), moistureSensor.getMoisturePercentage(), waterEngine.isCurrentlyWatering());
+  //statusDisplay.updateOnLoop(millis(), waterEngine.remainingTime(millis()),dhtSensor.readTemperature(), dhtSensor.readHumidity(), moistureSensor.getMoisturePercentage(), waterEngine.isCurrentlyWatering());
 }
 
 
